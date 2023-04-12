@@ -9,4 +9,4 @@
  - [ ] What's with the unused 7432 gate U12?
  - [x] Wire up ~OE on the 62256 work RAM
  - [ ] What does "For -01 use only" mean on the keyboard matrix? It says version -00 for "U" system, version -01 for "V" system?
- - [ ] What's up with the missing pin 30 on the cartridge?
+ - [x] What's up with the missing pin 30 on the cartridge?
