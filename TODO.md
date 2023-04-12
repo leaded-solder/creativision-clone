@@ -1,11 +1,12 @@
  - [x] Address bus
  - [ ] Does NTSC run at same CPU clock rate? Obviously not same VDP clock as PAL
- - [ ] Find cartridge pinout, spacing, etc
- - [ ] Make symbol for cartridge
+ - [x] Find cartridge pinout, spacing, etc
+ - [x] Make symbol for cartridge
  - [ ] Find connector for cartridge
- - [ ] Find/rephrase keyboard matrix
+ - [x] Find/rephrase keyboard matrix
  - [ ] Order 6502A, 6821 PIA
  - [x] Copy latches and VDP RAM setup over from SG-1000
  - [ ] What's with the unused 7432 gate U12?
  - [x] Wire up ~OE on the 62256 work RAM
  - [ ] What does "For -01 use only" mean on the keyboard matrix? It says version -00 for "U" system, version -01 for "V" system?
+ - [ ] What's up with the missing pin 30 on the cartridge?
