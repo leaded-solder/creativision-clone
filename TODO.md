@@ -1,0 +1,6 @@
+ - [ ] Address bus
+ - [ ] Does NTSC run at same CPU clock rate? Obviously not same VDP clock as PAL
+ - [ ] Find cartridge pinout, spacing, etc
+ - [ ] Find keyboard matrix
+ - [ ] Order 6502A, 6821 PIA
+ - [ ] Copy latches and VDP RAM setup over from SG-1000
