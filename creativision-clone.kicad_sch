@@ -11711,7 +11711,7 @@
     (property "Value" "TMS9918A" (at 66.675 231.14 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "Package_DIP:DIP-40_W25.4mm_Socket_LongPads" (at 66.675 229.235 0)
+    (property "Footprint" "Package_DIP:DIP-40_W15.24mm_Socket_LongPads" (at 66.675 229.235 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "https://ia803006.us.archive.org/33/items/Texas_Instruments_TMS9918A/Texas_Instruments_TMS9918A_text.pdf" (at 66.675 229.235 0)
