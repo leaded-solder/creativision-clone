@@ -3,4 +3,5 @@
   (lib (name "LeakoChips")(type "KiCad")(uri "${KIPRJMOD}/LeakoChips.kicad_sym")(options "")(descr ""))
   (lib (name "65xx")(type "KiCad")(uri "${KIPRJMOD}/vendor/6502-kicad-library/65xx.kicad_sym")(options "")(descr ""))
   (lib (name "AS6C62256")(type "Legacy")(uri "${KIPRJMOD}/AS6C62256.lib")(options "")(descr ""))
+  (lib (name "RCJ-017")(type "Legacy")(uri "${KIPRJMOD}/RCJ-017.lib")(options "")(descr ""))
 )
