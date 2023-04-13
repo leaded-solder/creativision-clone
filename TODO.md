@@ -10,3 +10,4 @@
  - [x] Wire up ~OE on the 62256 work RAM
  - [ ] What does "For -01 use only" mean on the keyboard matrix? It says version -00 for "U" system, version -01 for "V" system?
  - [x] What's up with the missing pin 30 on the cartridge?
+ - [x] What is J3 (PA4..PA7, partial?) Is it cassette tape? How many pins does it have?
