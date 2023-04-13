@@ -15,3 +15,4 @@
  - [x] Power connector, power switch
  - [x] Video out
  - [x] Audio out
+ - [x] Assign footprints
