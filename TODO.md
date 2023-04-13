@@ -13,5 +13,5 @@
  - [x] What's up with the missing pin 30 on the cartridge?
  - [x] What is J3 (PA4..PA7, partial?) Is it cassette tape? How many pins does it have?
  - [ ] Power connector, power switch
- - [ ] Video out
- - [ ] Audio out
+ - [x] Video out
+ - [x] Audio out
