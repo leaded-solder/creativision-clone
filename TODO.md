@@ -1,5 +1,5 @@
  - [x] Address bus
- - [ ] VDP clock
+ - [x] VDP clock
  - [ ] Does NTSC run at same CPU clock rate? Obviously not same VDP clock as PAL
  - [x] Find cartridge pinout, spacing, etc
  - [x] Make symbol for cartridge
@@ -12,6 +12,6 @@
  - [ ] What does "For -01 use only" mean on the keyboard matrix? It says version -00 for "U" system, version -01 for "V" system?
  - [x] What's up with the missing pin 30 on the cartridge?
  - [x] What is J3 (PA4..PA7, partial?) Is it cassette tape? How many pins does it have?
- - [ ] Power connector, power switch
+ - [x] Power connector, power switch
  - [x] Video out
  - [x] Audio out
