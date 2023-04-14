@@ -3,9 +3,9 @@
  - [ ] Does NTSC run at same CPU clock rate? Obviously not same VDP clock as PAL
  - [x] Find cartridge pinout, spacing, etc
  - [x] Make symbol for cartridge
- - [ ] Find connector for cartridge
+ - [x] Find connector for cartridge
  - [x] Find/rephrase keyboard matrix
- - [ ] Order 6502A, 6821 PIA
+ - [x] Order 6502A, 6821 PIA
  - [x] Copy latches and VDP RAM setup over from SG-1000
  - [ ] What's with the unused 7432 gate U12?
  - [x] Wire up ~OE on the 62256 work RAM
@@ -16,3 +16,4 @@
  - [x] Video out
  - [x] Audio out
  - [x] Assign footprints
+ - [x] Initial place and route (v0.1)
