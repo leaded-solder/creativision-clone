@@ -462,6 +462,10 @@
       {
         "netclass": "Power",
         "pattern": "*V"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "*VCC*"
       }
     ]
   },
