@@ -9163,7 +9163,7 @@
     (property "Value" "Cartridge Slot" (at 226.06 172.085 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "" (at 224.79 194.945 0)
+    (property "Footprint" "CreatiVision:Cartridge_Slot_36p" (at 224.79 194.945 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (at 224.79 194.945 0)
