@@ -438,7 +438,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp fe357355-975d-494f-83dc-39e9cd627a36)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 49fee480-bafd-45e3-9f38-646c7eb75ea2)
     )
@@ -983,7 +983,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 5096edb2-8651-46a4-ba63-524671dd0552)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp cf47ee81-c6e7-4f2f-bded-fefd010faf6e)
     )
@@ -1594,7 +1594,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 32c3b302-68b1-40d2-8159-9b62ccd3905f)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 7be4eb6d-4271-438d-9462-00d8748a9305)
     )
@@ -2761,7 +2761,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 4d692d70-9df1-478f-b0de-24fcf40d22f9)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 79f45f7e-e831-4042-9ec3-86cb45140b89)
     )
@@ -3144,7 +3144,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 60a0044b-2b93-4c46-ab69-cb11f8f479fc)
     )
-    (fp_text value "74HCT04" (at 3.81 17.57) (layer "F.Fab")
+    (fp_text value "74HCT04" (at 3.81 17.57) (layer "F.SilkS")
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 7ec45c30-4199-490a-add3-84dbe774ecb6)
     )
@@ -3378,7 +3378,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 4751e386-ce52-4c97-ae9a-c078547052d9)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 066d66da-cbec-409f-80bd-f5185b91497e)
     )
@@ -3708,7 +3708,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 6d0ed05d-48d3-48c5-ba19-412faa690150)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp f38262e3-c9c4-4fef-9be5-c2b9dea7b5fd)
     )
@@ -3988,7 +3988,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 821d060b-ccc2-4dfc-bdf8-66d11d1a4888)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at -2.031 -0.100071) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 106412cc-7372-4cb3-9d94-7a07c6d47c06)
     )
@@ -5036,7 +5036,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 7ef97112-9f3a-48d0-b7a5-7fd58ad42962)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp c25df310-f657-4415-a8c2-e7d0b356bb1c)
     )
@@ -5749,7 +5749,7 @@
     (property "ki_keywords" "r resistor")
     (path "/5d1d6c30-3179-4306-be26-47e17720f0f0")
     (attr through_hole)
-    (fp_text reference "R18" (at -2.54 0) (layer "F.SilkS")
+    (fp_text reference "R18" (at 13.335 0) (layer "F.SilkS")
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 70feffc9-37e3-4a86-aed0-f9c8fe9b28d7)
     )
@@ -6083,7 +6083,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp a85616d7-ab94-40c4-a63e-019039102675)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 8ab2316f-baf0-446e-8008-6bd67b6bdc44)
     )
@@ -6171,7 +6171,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 5d991610-2f0b-4943-a92d-4e7edc71af13)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 4054b281-f6cd-47ac-8e6a-13b25af951eb)
     )
@@ -6584,7 +6584,7 @@
     (property "ki_keywords" "connector")
     (path "/2fe5fcbc-1e06-4e80-94a3-e6e782ca27fc")
     (attr through_hole)
-    (fp_text reference "P1" (at 0 -0.5 -90 unlocked) (layer "F.SilkS")
+    (fp_text reference "P1" (at 0 -0.5 -90 unlocked) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.1)))
       (tstamp 900362b9-d1b4-4ebb-bf24-0a1a14f1446c)
     )
@@ -6695,7 +6695,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 7ccd6481-3424-43c2-ba27-508bf2a9df9b)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 7b407101-d2cf-41e8-8366-a3b922826f15)
     )
@@ -7023,7 +7023,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp bd5ce973-d627-4faa-8f10-4ad3f9cecc93)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp f56358e1-f053-408f-bd35-81c130c9a9a5)
     )
@@ -7285,7 +7285,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp aefc53aa-ee1a-4174-af1c-169fb55b6928)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8 90) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 28dcd5dc-ac71-4e72-9a83-24e3338dc183)
     )
@@ -7373,7 +7373,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp a9523b88-945d-45b4-b33d-0eb35c7bd25a)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 52136a42-1cb9-4226-b6f5-ef5178a7b90c)
     )
@@ -7717,7 +7717,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp b0efc3a0-6b13-41d5-b496-1c7e69099361)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 9b3f7eee-9925-4d06-a060-3cc62400586e)
     )
@@ -8625,7 +8625,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 57e164dc-4621-4472-bd87-4ec042536bb9)
     )
-    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS")
+    (fp_text user "K" (at 0 -1.8) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 76cab747-117e-4c51-80dc-f8d0bd89ed01)
     )
@@ -9149,7 +9149,7 @@
   (gr_text "+12V" (at 131.065 129.693929 90) (layer "F.SilkS") (tstamp 58c99516-2da5-49e2-83d8-24a9c5e38b00)
     (effects (font (size 1 1) (thickness 0.15)) (justify left bottom))
   )
-  (gr_text "leadedsolder.com 2023 v0.1" (at 265.685 135.662929) (layer "F.SilkS") (tstamp 5bc2ff4c-07e3-4c80-98bc-d2ac597edce3)
+  (gr_text "leadedsolder.com 2023 v0.1" (at 262.637 139.091929) (layer "F.SilkS") (tstamp 5bc2ff4c-07e3-4c80-98bc-d2ac597edce3)
     (effects (font (size 1 1) (thickness 0.15)) (justify right bottom))
   )
   (gr_text "0.1µF" (at 89.155 114.707929) (layer "F.SilkS") (tstamp 61c28818-ab23-436b-8a87-460d189ebef0)
@@ -9170,7 +9170,7 @@
   (gr_text "TAPE_VCC" (at 156.973 129.439929 90) (layer "F.SilkS") (tstamp 8e57ae1d-a1ca-47eb-8802-8881fa69915a)
     (effects (font (size 1 1) (thickness 0.15)) (justify left bottom))
   )
-  (gr_text "creativision" (at 265.685 134.392929) (layer "F.SilkS") (tstamp b9f5547f-b7cf-40d3-82e4-8dbbb5ec74c7)
+  (gr_text "creativision" (at 263.145 137.821929) (layer "F.SilkS") (tstamp b9f5547f-b7cf-40d3-82e4-8dbbb5ec74c7)
     (effects (font (size 3 3) (thickness 0.15)) (justify right bottom))
   )
   (gr_text "GND" (at 135.637 129.693929 45) (layer "F.SilkS") (tstamp bf5d5499-a574-4e1b-a711-d7588ea921d5)
