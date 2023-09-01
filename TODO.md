@@ -17,3 +17,4 @@
  - [x] Audio out
  - [x] Assign footprints
  - [x] Initial place and route (v0.1)
+ - [ ] Controller breakout protoboard (7mm gap between the two 10 * 2.54mm inner connectors, right angle 0.1" connectors, numbered edge, bodge pad and rail for power, edge hole for SNES?)

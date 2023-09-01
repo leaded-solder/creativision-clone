@@ -1,0 +1,6 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "MD-60FC")(type "KiCad")(uri "${KIPRJMOD}/MD-60FC")(options "")(descr ""))
+  (lib (name "imciner2-connectors")(type "KiCad")(uri "${KIPRJMOD}/imciner2-connectors.pretty")(options "")(descr ""))
+  (lib (name "MCU_RaspberryPi_and_Boards")(type "KiCad")(uri "${KIPRJMOD}/RP2040/MCU_RaspberryPi_and_Boards.pretty")(options "")(descr ""))
+)

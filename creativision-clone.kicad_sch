@@ -6652,11 +6652,6 @@
     (uuid ce3309e3-3313-42b6-98dc-63f24ecc116b)
   )
 
-  (text "TODO: footprint for this cartridge edge (2.54 pitch)"
-    (at 212.09 155.575 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 0f42c771-f651-4e64-ace4-550f1afd4ad9)
-  )
   (text "Main System RAM" (at 128.27 102.235 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 132c40e7-4e30-459c-9216-c4da7dc636f8)
