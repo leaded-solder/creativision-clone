@@ -27,6 +27,7 @@ pico_sdk_init()
 
 add_executable(creativision-gamepad-keyboard-v1
        gamepad.cpp
+       snespad.cpp
        )
 
 pico_set_program_name(creativision-gamepad-keyboard-v1 "creativision-gamepad-keyboard-v1")

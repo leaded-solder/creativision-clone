@@ -1,6 +1,22 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 
+#include "snespad.h"
+
+SnesPad pad;
+
+void loop() {
+    pad.update();
+
+    SnesButtonState state = pad.get();
+    
+    if((state & SNES_B) != 0) {
+        puts("Button B is down");
+    }
+    
+    // TODO: test new state
+}
+
 int main()
 {
     /*
@@ -26,8 +42,11 @@ int main()
 
     stdio_init_all();
 
+    // init SNES
 
-    puts("Hello, world!");
+    while(true) {
+        loop();
+    }
 
     return 0;
 }

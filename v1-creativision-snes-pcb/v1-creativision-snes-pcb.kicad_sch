@@ -1832,6 +1832,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 392b8100-dea1-4eaf-9c5e-288f3d3bbe81)
   )
+  (text "TODO: Level shifting would probably have been a good idea here"
+    (at 12.7 64.77 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 3ad1f185-b214-45cc-bbd4-f1ee60ed7fbb)
+  )
   (text "TODO: Add power filtering" (at 137.795 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 3b591b0d-e306-4ea9-9bf0-0ea08f919afb)
