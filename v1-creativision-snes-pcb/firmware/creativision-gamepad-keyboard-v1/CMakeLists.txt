@@ -25,7 +25,9 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(creativision-gamepad-keyboard-v1 creativision-gamepad-keyboard-v1.c )
+add_executable(creativision-gamepad-keyboard-v1
+       gamepad.cpp
+       )
 
 pico_set_program_name(creativision-gamepad-keyboard-v1 "creativision-gamepad-keyboard-v1")
 pico_set_program_version(creativision-gamepad-keyboard-v1 "0.1")
