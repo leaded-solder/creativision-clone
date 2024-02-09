@@ -20,6 +20,9 @@ void loop() {
     if(state.buttons[SNES_L]) {
         puts("Left Shoulder is down");
     }
+    if(state.buttons[SNES_SELECT]) {
+        puts("Select is down");
+    }
     
 
     // right shoulder seems to be stuck? is my reading off?

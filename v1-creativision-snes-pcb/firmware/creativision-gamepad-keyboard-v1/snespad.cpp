@@ -1,4 +1,6 @@
 #include "pico/stdlib.h"
+#include <stdio.h>
+
 
 #include "snespad.h"
 
@@ -22,12 +24,12 @@ void SnesPad::update() {
         gpio_put(SNES_CLOCK_GPIO, 1);
         sleep_us(SLEEP_CLOCK_uS);
 
+        gpio_put(SNES_CLOCK_GPIO, 0);
+        sleep_us(SLEEP_CLOCK_uS);
+
         if(i < SNES_NUM_BUTTONS) {
             this->thisRead.buttons[i] = !gpio_get(SNES_DATA_GPIO);
         }
-
-        gpio_put(SNES_CLOCK_GPIO, 0);
-        sleep_us(SLEEP_CLOCK_uS);
     }
 }
 
@@ -43,6 +45,7 @@ SnesPad::SnesPad() {
     gpio_set_dir(SNES_LATCH_GPIO, GPIO_OUT);
     gpio_set_dir(SNES_CLOCK_GPIO, GPIO_OUT);
     gpio_set_dir(SNES_DATA_GPIO, GPIO_IN);
+    gpio_pull_up(SNES_DATA_GPIO);
 
     gpio_put(SNES_LATCH_GPIO, 0);
     gpio_put(SNES_CLOCK_GPIO, 0);
