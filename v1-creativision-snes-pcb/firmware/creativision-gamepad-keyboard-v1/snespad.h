@@ -5,22 +5,26 @@
 #define SNES_LATCH_GPIO 21
 #define SNES_CLOCK_GPIO 20
 
-enum SnesButtonState {
-    SNES_B = 0x800,
-    SNES_Y = 0x400,
-    SNES_SELECT = 0x200,
-    SNES_START = 0x100,
-    SNES_UP = 0x80,
-    SNES_DOWN = 0x40,
-    SNES_LEFT = 0x20,
-    SNES_RIGHT = 0x10,
-    SNES_A = 0x08,
-    SNES_X = 0x04,
-    SNES_L = 0x02,
-    SNES_R = 0x01 
+enum SnesButton {
+    SNES_B = 0,
+    SNES_Y = 1,
+    SNES_SELECT = 2,
+    SNES_START = 3,
+    SNES_UP = 4,
+    SNES_DOWN = 5,
+    SNES_LEFT = 6,
+    SNES_RIGHT = 7,
+    SNES_A = 8,
+    SNES_X = 9,
+    SNES_L = 10,
+    SNES_R = 11 
 };
 
 #define SNES_NUM_BUTTONS 12
+
+struct SnesButtonState {
+    bool buttons[SNES_NUM_BUTTONS];
+};
 
 class SnesPad {
 public:
@@ -30,11 +34,8 @@ public:
     void update();
     // read last SNES button state
     SnesButtonState get();
-    // get "new" buttons this frame (we don't care for the Wizzard but it's easy enough to do)
-    SnesButtonState getNew();
 private:
     SnesButtonState thisRead;
-    SnesButtonState previousRead;
 };
 
 #endif

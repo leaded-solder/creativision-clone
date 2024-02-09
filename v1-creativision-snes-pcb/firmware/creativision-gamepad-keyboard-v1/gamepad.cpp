@@ -10,18 +10,14 @@ void loop() {
 
     SnesButtonState state = pad.get();
     
-    if((state & SNES_B) == 0) {
+    if(state.buttons[SNES_B]) {
         // if this is wrong, the enum's backwards
         puts("Button B is down");
     }
-    if((state & SNES_A) == 0) {
-        // if this is wrong, the enum's backwards
-        puts("Button A is down");
+    if(state.buttons[SNES_LEFT]) {
+        puts("Button Left is down");
     }
-    if((state & SNES_LEFT) == 0) {
-        // if this is wrong, the enum's backwards
-        puts("Left dir is down");
-    }
+    
 
     // right shoulder seems to be stuck? is my reading off?
 
@@ -55,6 +51,7 @@ int main()
 
 
     // init SNES
+    puts("Hiya");
 
     while(true) {
         loop();
