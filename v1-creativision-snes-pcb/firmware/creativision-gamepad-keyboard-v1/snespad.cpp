@@ -2,25 +2,32 @@
 
 #include "snespad.h"
 
+// Timing taken from https://github.com/MickGyver/DaemonBite-Retro-Controllers-USB/blob/master/SNESControllersUSB/SNESControllersUSB.ino
+#define SLEEP_LATCH 12
+#define SLEEP_CLOCK 6
+
 void SnesPad::update() {
     // Cycle latch on the controller
     gpio_put(SNES_LATCH_GPIO, 1);
-    sleep_us(12);
+    sleep_us(SLEEP_LATCH);
     gpio_put(SNES_LATCH_GPIO, 0);
-    sleep_us(6);
+    sleep_us(SLEEP_CLOCK);
 
     // Clock the shift register in now
+    // button B is always sent immediately
+    this->thisRead.buttons[SNES_B] = !gpio_get(SNES_DATA_GPIO);
 
-    // We're just going to read the 12 basic buttons, if you want to
-    // implement something like the mouse you can extend this
-    for(unsigned char i = 0; i < SNES_NUM_BUTTONS; ++i) {
+    // SNES expects full 16 cycles
+    for(unsigned char i = 1; i < 16; ++i) {
         gpio_put(SNES_CLOCK_GPIO, 0);
-        sleep_us(6);
+        sleep_us(SLEEP_CLOCK);
 
-        this->thisRead.buttons[i] = !gpio_get(SNES_DATA_GPIO);
+        if(i < SNES_NUM_BUTTONS) {
+            this->thisRead.buttons[i] = !gpio_get(SNES_DATA_GPIO);
+        }
 
         gpio_put(SNES_CLOCK_GPIO, 1);
-        sleep_us(6);
+        sleep_us(SLEEP_CLOCK);
     }
 }
 
@@ -38,5 +45,5 @@ SnesPad::SnesPad() {
     gpio_set_dir(SNES_DATA_GPIO, GPIO_IN);
 
     gpio_put(SNES_LATCH_GPIO, 0);
-    gpio_put(SNES_CLOCK_GPIO, 0);
+    gpio_put(SNES_CLOCK_GPIO, 1);
 }
