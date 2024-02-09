@@ -6,18 +6,18 @@
 #define SNES_CLOCK_GPIO 20
 
 enum SnesButtonState {
-    SNES_B,
-    SNES_Y,
-    SNES_SELECT,
-    SNES_START,
-    SNES_UP,
-    SNES_DOWN,
-    SNES_LEFT,
-    SNES_RIGHT,
-    SNES_A,
-    SNES_X,
-    SNES_L,
-    SNES_R // might have to reverse this
+    SNES_B = 0x800,
+    SNES_Y = 0x400,
+    SNES_SELECT = 0x200,
+    SNES_START = 0x100,
+    SNES_UP = 0x80,
+    SNES_DOWN = 0x40,
+    SNES_LEFT = 0x20,
+    SNES_RIGHT = 0x10,
+    SNES_A = 0x08,
+    SNES_X = 0x04,
+    SNES_L = 0x02,
+    SNES_R = 0x01 
 };
 
 #define SNES_NUM_BUTTONS 12

@@ -33,8 +33,8 @@ add_executable(creativision-gamepad-keyboard-v1
 pico_set_program_name(creativision-gamepad-keyboard-v1 "creativision-gamepad-keyboard-v1")
 pico_set_program_version(creativision-gamepad-keyboard-v1 "0.1")
 
-pico_enable_stdio_uart(creativision-gamepad-keyboard-v1 1)
-pico_enable_stdio_usb(creativision-gamepad-keyboard-v1 0)
+pico_enable_stdio_uart(creativision-gamepad-keyboard-v1 0)
+pico_enable_stdio_usb(creativision-gamepad-keyboard-v1 1)
 
 # Add the standard library to the build
 target_link_libraries(creativision-gamepad-keyboard-v1
