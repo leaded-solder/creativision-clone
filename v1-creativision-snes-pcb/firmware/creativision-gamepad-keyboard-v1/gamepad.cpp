@@ -3,12 +3,12 @@
 
 #include "snespad.h"
 
-SnesPad pad;
+SnesPad *pad = NULL;
 
 void loop() {
-    pad.update();
+    pad->update();
 
-    SnesButtonState state = pad.get();
+    SnesButtonState state = pad->get();
     
     if(state.buttons[SNES_B]) {
         // if this is wrong, the enum's backwards
@@ -16,6 +16,9 @@ void loop() {
     }
     if(state.buttons[SNES_LEFT]) {
         puts("Button Left is down");
+    }
+    if(state.buttons[SNES_L]) {
+        puts("Left Shoulder is down");
     }
     
 
@@ -52,6 +55,8 @@ int main()
 
     // init SNES
     puts("Hiya");
+
+    pad = new SnesPad();
 
     while(true) {
         loop();
