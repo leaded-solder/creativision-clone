@@ -42,11 +42,16 @@ SnesPad::SnesPad() {
         thisRead.buttons[i] = false;
     }
 
+    gpio_init(SNES_LATCH_GPIO);
+    gpio_init(SNES_CLOCK_GPIO);
+    gpio_init(SNES_DATA_GPIO);
+
     gpio_set_dir(SNES_LATCH_GPIO, GPIO_OUT);
     gpio_set_dir(SNES_CLOCK_GPIO, GPIO_OUT);
+
     gpio_set_dir(SNES_DATA_GPIO, GPIO_IN);
     gpio_pull_up(SNES_DATA_GPIO);
 
     gpio_put(SNES_LATCH_GPIO, 0);
-    gpio_put(SNES_CLOCK_GPIO, 0);
+    gpio_put(SNES_CLOCK_GPIO, 1);
 }

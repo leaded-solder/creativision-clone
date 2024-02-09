@@ -14,14 +14,29 @@ void loop() {
         // if this is wrong, the enum's backwards
         puts("Button B is down");
     }
+    if(state.buttons[SNES_A]) {
+        puts("Button A is down");
+    }
+    if(state.buttons[SNES_X]) {
+        puts("Button X is down");
+    }
+    if(state.buttons[SNES_Y]) {
+        puts("Button Y is down");
+    }
     if(state.buttons[SNES_LEFT]) {
         puts("Button Left is down");
     }
     if(state.buttons[SNES_L]) {
         puts("Left Shoulder is down");
     }
+    if(state.buttons[SNES_R]) {
+        puts("Right Shoulder is down");
+    }
     if(state.buttons[SNES_SELECT]) {
         puts("Select is down");
+    }
+    if(state.buttons[SNES_START]) {
+        puts("Start is down");
     }
     
 
