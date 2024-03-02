@@ -11,7 +11,6 @@ void loop() {
     SnesButtonState state = pad->get();
     
     if(state.buttons[SNES_B]) {
-        // if this is wrong, the enum's backwards
         puts("Button B is down");
     }
     if(state.buttons[SNES_A]) {
