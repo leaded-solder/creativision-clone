@@ -5,6 +5,11 @@
 
 SnesPad *pad = NULL;
 
+#define PIN_MATRIX_A 0
+#define PIN_MATRIX_B 1
+#define PIN_MATRIX_C 2
+#define PIN_MATRIX_D 3
+
 void loop() {
     pad->update();
 
@@ -37,11 +42,10 @@ void loop() {
     if(state.buttons[SNES_START]) {
         puts("Start is down");
     }
+
+    // TODO: Read PS/2 keyboard as well (ideally interrupt-free)
     
-
-    // right shoulder seems to be stuck? is my reading off?
-
-    // TODO: Detect PA0..PA3 inputs changing and then offer up a new matrix
+    // Detect PA0..PA3 inputs changing and then offer up a new matrix
 }
 
 int main()
