@@ -5,10 +5,10 @@
 
 SnesPad *pad = NULL;
 
-#define PIN_MATRIX_A 0
-#define PIN_MATRIX_B 1
-#define PIN_MATRIX_C 2
-#define PIN_MATRIX_D 3
+#define PIN_MATRIX_A 0 // "pin 2," right joystick
+#define PIN_MATRIX_B 1 // "pin 1," right joystick
+#define PIN_MATRIX_C 2 // "pin 10," left joystick
+#define PIN_MATRIX_D 3 // "pin 9," left joystick
 
 void loop() {
     pad->update();
