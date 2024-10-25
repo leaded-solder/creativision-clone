@@ -5,10 +5,12 @@
 
 SnesPad *pad = NULL;
 
-#define PIN_MATRIX_A 0 // "pin 2," right joystick
-#define PIN_MATRIX_B 1 // "pin 1," right joystick
-#define PIN_MATRIX_C 2 // "pin 10," left joystick
-#define PIN_MATRIX_D 3 // "pin 9," left joystick
+#define PIN_MATRIX_A 0 // "pin 2," right joystick   (PA0)
+#define PIN_MATRIX_B 1 // "pin 1," right joystick   (PA1)
+#define PIN_MATRIX_C 2 // "pin 10," left joystick   (PA2)
+#define PIN_MATRIX_D 3 // "pin 9," left joystick    (PA3)
+
+unsigned short last_matrix_row; // current matrix row being read
 
 void loop() {
     pad->update();
@@ -46,6 +48,16 @@ void loop() {
     // TODO: Read PS/2 keyboard as well (ideally interrupt-free)
     
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
+    unsigned short new_matrix_row = 0;
+    for(unsigned short i = 0; i < 4; ++i) {
+        new_matrix_row = (new_matrix_row << 1) | gpio_get(PIN_MATRIX_A + i);
+    }
+
+    if(last_matrix_row != new_matrix_row) {
+        // TODO: Change outputs
+        printf("Output has changed, now %i\n", new_matrix_row);
+        last_matrix_row = new_matrix_row;
+    }
 }
 
 int main()
@@ -73,6 +85,9 @@ int main()
 
     stdio_init_all();
 
+    // TODO: Turn off all outputs
+
+    last_matrix_row = 0xff; // force it to re-initialize on first pull
 
     // init SNES
     puts("Hiya");
