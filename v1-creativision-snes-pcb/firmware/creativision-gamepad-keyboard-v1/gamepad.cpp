@@ -55,9 +55,12 @@ void loop() {
 
     if(last_matrix_row != new_matrix_row) {
         // TODO: Change outputs
-        printf("Output has changed, now %i\n", new_matrix_row);
+        printf("Requested output has changed, now %i\n", new_matrix_row);
         last_matrix_row = new_matrix_row;
     }
+
+    // probably the way to do this is some kind of table, so that individual characters
+    // will turn on parts of the gpio flags (basically the same table that was made for the PDF)
 }
 
 int main()
