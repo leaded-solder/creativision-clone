@@ -20,7 +20,7 @@ unsigned short last_matrix_row; // current matrix row being read
 // TODO: keyboard/gamepad state
 // some kind of keymap structure that is an array to set pins from, where each item is a pointer into the "key state" array
 
-void loop() {
+void loop(PIO& pio, uint& sm) {
     pad->update();
 
     SnesButtonState state = pad->get();
@@ -53,7 +53,7 @@ void loop() {
         puts("Start is down");
     }
 
-    // TODO: Read PS/2 keyboard as well (ideally interrupt-free)
+    // TODO: Read PS/2 keyboard as well (ideally interrupt-free, blocking-free)
     
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
     unsigned short new_matrix_row = 0;
@@ -115,7 +115,7 @@ int main()
     pad = new SnesPad();
 
     while(true) {
-        loop();
+        loop(pio, sm);
     }
 
     return 0;
