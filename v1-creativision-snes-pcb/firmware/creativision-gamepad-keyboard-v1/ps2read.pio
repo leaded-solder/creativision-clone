@@ -34,6 +34,5 @@ static inline void ps2read_program_init(PIO pio, uint sm, uint offset, uint cloc
 
     // load config and jump to program
     pio_sm_init(pio, sm, offset, &c);
-    pio_sm_set_enabled(pio, sm, true);
 }
 %}

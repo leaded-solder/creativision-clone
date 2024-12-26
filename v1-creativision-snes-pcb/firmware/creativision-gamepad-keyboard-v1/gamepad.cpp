@@ -18,6 +18,7 @@ SnesPad *pad = NULL;
 unsigned short last_matrix_row; // current matrix row being read
 
 // TODO: keyboard/gamepad state
+// some kind of keymap structure that is an array to set pins from, where each item is a pointer into the "key state" array
 
 void loop() {
     pad->update();
@@ -104,6 +105,11 @@ int main()
 
     // load PS/2 parsing PIO
     // https://raspico.blogspot.com/2022/05/using-pio-to-interface-ps2-keyboard.html
+    PIO pio = pio0;
+    uint sm = pio_claim_unused_sm(pio, true);
+    uint offset = pio_add_program(pio, &ps2read_program);
+    ps2read_program_init(pio, sm, offset, PIN_PS2_CLOCK);
+    pio_sm_set_enabled(pio, sm, true);
 
     // initialize SNES
     pad = new SnesPad();
