@@ -17,6 +17,8 @@ SnesPad *pad = NULL;
 
 unsigned short last_matrix_row; // current matrix row being read
 
+// TODO: keyboard/gamepad state
+
 void loop() {
     pad->update();
 
@@ -88,8 +90,11 @@ int main()
     */
 
     // TODO: Identify RJoy/LJoy matrix inputs changing
-    // TODO: Test SNES controller
     // TODO: Keyboard reading and state
+
+    // TODO: Activate outputs
+    // TODO: Set outputs high or low depending on ptr to keyboard state/SNES state
+    // TODO: Test SNES controller
 
     stdio_init_all();
 
