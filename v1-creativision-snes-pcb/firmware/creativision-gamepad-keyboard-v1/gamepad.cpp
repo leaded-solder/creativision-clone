@@ -3,6 +3,8 @@
 
 #include "snespad.h"
 
+#include "ps2read.pio.h"
+
 SnesPad *pad = NULL;
 
 #define PIN_MATRIX_A 0 // "pin 2," right joystick   (PA0)

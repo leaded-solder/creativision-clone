@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_OSX_SYSROOT /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk)
+
 # Initialise pico_sdk from installed location
 # (note this can come from environment, CMake cache etc)
 set(PICO_SDK_PATH $ENV{PICO_SDK_PATH})
@@ -24,11 +26,15 @@ project(creativision-gamepad-keyboard-v1 C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-
 add_executable(creativision-gamepad-keyboard-v1
        gamepad.cpp
        snespad.cpp
        )
+
+# generate PIO header
+pico_generate_pio_header(${PROJECT_NAME}
+  ${CMAKE_CURRENT_LIST_DIR}/ps2read.pio
+  )
 
 pico_set_program_name(creativision-gamepad-keyboard-v1 "creativision-gamepad-keyboard-v1")
 pico_set_program_version(creativision-gamepad-keyboard-v1 "0.1")
@@ -48,6 +54,7 @@ target_include_directories(creativision-gamepad-keyboard-v1 PRIVATE
 
 # Add any user requested libraries
 target_link_libraries(creativision-gamepad-keyboard-v1 
+  hardware_pio
         )
 
 pico_add_extra_outputs(creativision-gamepad-keyboard-v1)

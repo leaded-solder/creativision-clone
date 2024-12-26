@@ -1,0 +1,39 @@
+.pio_version 0
+.program ps2read
+
+; Read PS/2 keyboard and output up to 11 bits
+
+.wrap_target
+
+    wait 1 pin 0 ; PS/2 clock idles high
+    wait 0 pin 0
+    in pins, 1
+
+.wrap
+
+% c-sdk {
+static inline void ps2read_program_init(PIO pio, uint sm, uint offset, uint clockpin) {
+    pio_sm_config c = ps2read_program_get_default_config(offset);
+
+    // lower pin clock, upper pin data
+    sm_config_set_in_pins(&c, clockpin);
+    pio_sm_set_consecutive_pindirs(pio, sm, clockpin, 2, false);
+
+    pio_gpio_init(pio, clockpin);
+    pio_gpio_init(pio, clockpin + 1 /* data pin */);
+
+    sm_config_set_in_shift(
+        &c,
+        true, // shift to right
+        true, // autopush enabled
+        11 // autopush threshold 11 bits
+    );
+
+    // We only receive, so disable the TX FIFO to make the RX FIFO deeper.
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_RX);
+
+    // load config and jump to program
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}

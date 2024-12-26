@@ -1,4 +1,7 @@
 build
+picotool
+ps2read.pio.h
+*auto*save*
 CMakeDoxy*
 _deps
 *.ld
