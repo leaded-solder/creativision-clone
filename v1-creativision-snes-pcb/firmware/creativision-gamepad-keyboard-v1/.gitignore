@@ -1,4 +1,7 @@
 build
+CMakeDoxy*
+_deps
+*.ld
 *.dis
 *.hex
 *.elf*

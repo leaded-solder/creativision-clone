@@ -10,6 +10,9 @@ SnesPad *pad = NULL;
 #define PIN_MATRIX_C 2 // "pin 10," left joystick   (PA2)
 #define PIN_MATRIX_D 3 // "pin 9," left joystick    (PA3)
 
+#define PIN_PS2_DATA 28
+#define PIN_PS2_CLOCK 27
+
 unsigned short last_matrix_row; // current matrix row being read
 
 void loop() {
@@ -92,9 +95,10 @@ int main()
 
     last_matrix_row = 0xff; // force it to re-initialize on first pull
 
-    // init SNES
-    puts("Hiya");
+    // load PS/2 parsing PIO
+    // https://raspico.blogspot.com/2022/05/using-pio-to-interface-ps2-keyboard.html
 
+    // initialize SNES
     pad = new SnesPad();
 
     while(true) {
