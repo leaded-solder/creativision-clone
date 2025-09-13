@@ -54,6 +54,8 @@ void loop(PIO& pio, uint& sm) {
     pad->update();
 
     SnesButtonState state = pad->get();
+
+    // TODO: Set/reset appropriate matrix pins for controller
     
     if(state.buttons[SNES_B]) {
         puts("Button B is down");
@@ -83,7 +85,7 @@ void loop(PIO& pio, uint& sm) {
         puts("Start is down");
     }
 
-    // TODO: Read PS/2 keyboard as well (ideally interrupt-free, blocking-free)
+    // TODO: Read PS/2 keyboard as well (ideally interrupt-free, blocking-free) - detect keyup, keydown
     
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
     unsigned short new_matrix_row = 0;
