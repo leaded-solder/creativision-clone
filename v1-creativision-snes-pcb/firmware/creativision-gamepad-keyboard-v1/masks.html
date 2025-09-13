@@ -1,0 +1,79 @@
+<html>
+        <title>GPIO mask calculator</title>
+        <body>
+                <div id="foob">
+                        <div id="gpios"></div>
+                        <div id="mask"></div>
+                </div>
+
+                <script>
+                        var known_ios = {
+                                0: '~ROWSEL_0',
+                                1: '~ROWSEL_1',
+                                2: '~ROWSEL_2',
+                                3: '~ROWSEL_3'
+                        }
+
+                        for(var i = 0; i < 8; ++i) {
+                                known_ios[4 + i] = 'Right' + i;
+                        }
+
+                        for(var i = 0; i < 8; ++i) {
+                                known_ios[12 + i] = 'Left' + i;
+                        }
+
+                        function recalculateMask() {
+                                // Step through all the GPIOs
+                                var checkboxes = document.getElementsByTagName('input');
+                                
+                                var value = 0;
+
+                                for(var i = checkboxes.length - 1; i >= 0; i--) {
+                                        var isChecked = checkboxes[i].checked;
+
+                                        value = value << 1 | (isChecked ? 1 : 0)
+                                }
+
+                                var textContainer = document.getElementById('mask')
+                                textContainer.innerHTML = '';
+
+                                textContainer.appendChild(document.createTextNode('Mask: ' + value.toString(16)))
+                        }
+
+                        (function() {
+                                // 30 gpios
+                                var gpios = document.getElementById('gpios');
+
+                                for(var i = 0; i < 30; ++i) {
+                                        var checkbox = document.createElement('input');
+                                        checkbox.type = 'checkbox';
+                                        checkbox.name = 'gpio' + i;
+                                        checkbox.value = 'value';
+                                        checkbox.id = checkbox.name;
+
+                                        checkbox.addEventListener('change', (event) => {
+                                                recalculateMask()
+                                        });
+
+                                        var label  = document.createElement('label');
+                                        label.htmlFor = checkbox.id;
+                                        var labelText = 'GPIO ' + i
+
+                                        if(i in known_ios) {
+                                                labelText = labelText + " (" + known_ios[i] + ")"
+                                        }
+
+                                        label.appendChild(document.createTextNode(labelText))
+
+                                        var wrapper = document.createElement('div')
+                                        wrapper.appendChild(checkbox);
+                                        wrapper.appendChild(label);
+
+                                        gpios.appendChild(wrapper);
+                                }
+
+                                recalculateMask();
+                        })();
+                </script>
+        </body>
+</html>

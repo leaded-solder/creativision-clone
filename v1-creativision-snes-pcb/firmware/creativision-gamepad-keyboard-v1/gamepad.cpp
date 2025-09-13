@@ -7,18 +7,48 @@
 
 SnesPad *pad = NULL;
 
-#define PIN_MATRIX_A 0 // "pin 2," right joystick   (PA0)
-#define PIN_MATRIX_B 1 // "pin 1," right joystick   (PA1)
-#define PIN_MATRIX_C 2 // "pin 10," left joystick   (PA2)
-#define PIN_MATRIX_D 3 // "pin 9," left joystick    (PA3)
+#define PIN_MATRIX_A 0 // "pin 2," right joystick   (~PA0)
+#define PIN_MATRIX_B 1 // "pin 1," right joystick   (~PA1)
+#define PIN_MATRIX_C 2 // "pin 10," left joystick   (~PA2)
+#define PIN_MATRIX_D 3 // "pin 9," left joystick    (~PA3)
+// the select lines are mutually exclusive
 
 #define PIN_PS2_DATA 28
 #define PIN_PS2_CLOCK 27
 
+// Pins GPIO4..GPIO19 inclusive
+#define OUTPUT_MATRIX_MASK 0xffff0
+
 unsigned short last_matrix_row; // current matrix row being read
+
+// matrix is A-H, A-H (16 bits)
+
+// GPIO4 -> Right A
+// GPIO5 -> Right B
+// GPIO6 -> Right C
+// GPIO7 -> Right D
+// GPIO8 -> Right E
+// GPIO9 -> Right F
+// GPIO10 -> Right G
+// GPIO11 -> Right H
+
+// GPIO12 -> Left A
+// GPIO13 -> Left B
+// GPIO14 -> Left C
+// GPIO15 -> Left D
+// GPIO16 -> Left E
+// GPIO17 -> Left F
+// GPIO18 -> Left G
+// GPIO19 -> Left H
 
 // TODO: keyboard/gamepad state
 // some kind of keymap structure that is an array to set pins from, where each item is a pointer into the "key state" array
+// then we can just drive the mask
+
+/**
+ * The entire matrix for all rows (bitmask for RIGHT-LEFT, see above)
+ */
+unsigned short full_matrix[4];
 
 void loop(PIO& pio, uint& sm) {
     pad->update();
@@ -62,10 +92,12 @@ void loop(PIO& pio, uint& sm) {
     }
 
     if(last_matrix_row != new_matrix_row) {
-        // TODO: Change outputs
         printf("Requested output has changed, now %i\n", new_matrix_row);
         last_matrix_row = new_matrix_row;
     }
+
+    // Change outputs (if needed, this will also pick up key changes during a row)
+    gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[new_matrix_row] << 4);
 
     // probably the way to do this is some kind of table, so that individual characters
     // will turn on parts of the gpio flags (basically the same table that was made for the PDF)
@@ -100,6 +132,10 @@ int main()
     stdio_init_all();
 
     // TODO: Turn off all outputs
+
+    for(unsigned char i = 0; i < 4; ++i) {
+        full_matrix[i] = 0;
+    }
 
     last_matrix_row = 0xff; // force it to re-initialize on first pull
 
