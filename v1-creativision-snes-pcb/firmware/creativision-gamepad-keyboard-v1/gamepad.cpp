@@ -16,7 +16,9 @@ SnesPad *pad = NULL;
 #define PIN_PS2_DATA 28
 #define PIN_PS2_CLOCK 27
 
-// Pins GPIO4..GPIO19 inclusive
+// Pins GPIO0..GPIO3 inclusive (active low)
+#define INPUT_MATRIX_SELECTS 0x0000f
+// Pins GPIO4..GPIO19 inclusive (active high)
 #define OUTPUT_MATRIX_MASK 0xffff0
 
 unsigned short last_matrix_row; // current matrix row being read
@@ -44,6 +46,8 @@ unsigned short last_matrix_row; // current matrix row being read
 // TODO: keyboard/gamepad state
 // some kind of keymap structure that is an array to set pins from, where each item is a pointer into the "key state" array
 // then we can just drive the mask
+
+// TODO: it probably makes sense to make the keycode a u8 (for row index) and then u16 (for bitmask)
 
 /**
  * The entire matrix for all rows (bitmask for RIGHT-LEFT, see above)
@@ -90,10 +94,11 @@ void loop(PIO& pio, uint& sm) {
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
     unsigned short new_matrix_row = 0;
     for(unsigned short i = 0; i < 4; ++i) {
-        new_matrix_row = (new_matrix_row << 1) | gpio_get(PIN_MATRIX_A + i);
+        // It's active low, so we're inverting it so the active row is active
+        new_matrix_row = ~(gpio_get_all() & INPUT_MATRIX_SELECTS);
     }
 
-    if(last_matrix_row != new_matrix_row) {
+    if(last_matrix_row != new_matrix_row) {        
         printf("Requested output has changed, now %i\n", new_matrix_row);
         last_matrix_row = new_matrix_row;
     }
