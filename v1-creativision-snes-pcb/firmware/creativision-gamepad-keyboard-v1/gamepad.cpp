@@ -16,9 +16,9 @@ SnesPad *pad = NULL;
 #define PIN_PS2_DATA 28
 #define PIN_PS2_CLOCK 27
 
-// Pins GPIO0..GPIO3 inclusive (active low)
+// Pins GPIO0..GPIO3 inclusive (active low, 0 = selected)
 #define INPUT_MATRIX_SELECTS 0x0000f
-// Pins GPIO4..GPIO19 inclusive (active high)
+// Pins GPIO4..GPIO19 inclusive (active low, 0 = pressed)
 #define OUTPUT_MATRIX_MASK 0xffff0
 
 unsigned short last_matrix_row; // current matrix row being read
@@ -104,6 +104,9 @@ void loop(PIO& pio, uint& sm) {
     }
 
     // Change outputs (if needed, this will also pick up key changes during a row)
+
+    // TODO: Endianness? Do we need to change the order of the matrix to LEFTRIGHT instead of RIGHTLEFT bytes?
+    // remember that this is also active low
     gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[new_matrix_row] << 4);
 
     // probably the way to do this is some kind of table, so that individual characters
