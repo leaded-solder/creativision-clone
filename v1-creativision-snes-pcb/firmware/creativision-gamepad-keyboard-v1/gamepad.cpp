@@ -54,6 +54,24 @@ unsigned short last_matrix_row; // current matrix row being read
  */
 unsigned short full_matrix[4];
 
+#define MASK_RIGHT_A 0x00010
+#define MASK_RIGHT_B 0x00020
+#define MASK_RIGHT_C 0x00040
+#define MASK_RIGHT_D 0x00080
+#define MASK_RIGHT_E 0x00100
+#define MASK_RIGHT_F 0x00200
+#define MASK_RIGHT_G 0x00400
+#define MASK_RIGHT_H 0x00800
+
+#define MASK_LEFT_A 0x01000
+#define MASK_LEFT_B 0x02000
+#define MASK_LEFT_C 0x04000
+#define MASK_LEFT_D 0x08000
+#define MASK_LEFT_E 0x10000
+#define MASK_LEFT_F 0x20000
+#define MASK_LEFT_G 0x40000
+#define MASK_LEFT_H 0x80000
+
 void loop(PIO& pio, uint& sm) {
     pad->update();
 
@@ -62,9 +80,14 @@ void loop(PIO& pio, uint& sm) {
     // TODO: Set/reset appropriate matrix pins for controller
     
     if(state.buttons[SNES_B]) {
-        puts("Button B is down");
+        // Fire Left: pin 8 (F) to pin 1 (PA1)
+        full_matrix[1] = full_matrix[1] & ~MASK_LEFT_F;
+    }
+    else {
+        full_matrix[1] = full_matrix[1] & MASK_LEFT_F;
     }
     if(state.buttons[SNES_A]) {
+        // Fire Right: pin 8 (F) to pin 2 (PA0)
         puts("Button A is down");
     }
     if(state.buttons[SNES_X]) {
