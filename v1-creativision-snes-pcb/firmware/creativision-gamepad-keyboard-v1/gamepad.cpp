@@ -141,10 +141,16 @@ int main()
 
     stdio_init_all();
 
-    // TODO: Turn off all outputs
+    // Set directions
+    gpio_set_dir_in_masked(INPUT_MATRIX_SELECTS);
+    gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
 
+    // Pull everything high. Is this better done with pullups?
+    gpio_put_masked(OUTPUT_MATRIX_MASK, OUTPUT_MATRIX_MASK);
+
+    // Clear matrix state
     for(unsigned char i = 0; i < 4; ++i) {
-        full_matrix[i] = 0;
+        full_matrix[i] = 0xffff;
     }
 
     last_matrix_row = 0xff; // force it to re-initialize on first pull
