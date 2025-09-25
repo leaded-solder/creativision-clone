@@ -25,23 +25,23 @@ unsigned short last_matrix_row; // current matrix row being read
 
 // matrix is A-H, A-H (16 bits)
 
-// GPIO4 -> Right A
-// GPIO5 -> Right B
-// GPIO6 -> Right C
+// GPIO4 -> Right A (pin 3)
+// GPIO5 -> Right B (pin 4)
+// GPIO6 -> Right C (pin 5)
 // GPIO7 -> Right D
 // GPIO8 -> Right E
 // GPIO9 -> Right F
 // GPIO10 -> Right G
 // GPIO11 -> Right H
 
-// GPIO12 -> Left A
-// GPIO13 -> Left B
-// GPIO14 -> Left C
-// GPIO15 -> Left D
-// GPIO16 -> Left E
-// GPIO17 -> Left F
-// GPIO18 -> Left G
-// GPIO19 -> Left H
+// GPIO12 -> Left A (pin 1)
+// GPIO13 -> Left B (pin 2)
+// GPIO14 -> Left C (pin 3)
+// GPIO15 -> Left D (pin 4)
+// GPIO16 -> Left E (pin 5)
+// GPIO17 -> Left F (pin 6)
+// GPIO18 -> Left G (pin 7)
+// GPIO19 -> Left H (pin 8)
 
 // TODO: keyboard/gamepad state
 // some kind of keymap structure that is an array to set pins from, where each item is a pointer into the "key state" array
@@ -80,22 +80,37 @@ void loop(PIO& pio, uint& sm) {
     // TODO: Set/reset appropriate matrix pins for controller
     
     if(state.buttons[SNES_B]) {
-        // Fire Left: pin 8 (F) to pin 1 (PA1)
-        full_matrix[1] = full_matrix[1] & ~MASK_LEFT_F;
+        // Fire left (left joystick) pin 3 (Left C) to PA2
+        full_matrix[PIN_MATRIX_C] &= ~MASK_LEFT_C;
     }
     else {
-        full_matrix[1] = full_matrix[1] & MASK_LEFT_F;
+        full_matrix[PIN_MATRIX_C] &= MASK_LEFT_C;
     }
+
     if(state.buttons[SNES_A]) {
-        // Fire Right: pin 8 (F) to pin 2 (PA0)
-        puts("Button A is down");
+        // Fire Right (left joystick:) pin 3 (Left C) to PA3
+        full_matrix[PIN_MATRIX_D] &= ~MASK_LEFT_C;
     }
+    else {
+        full_matrix[PIN_MATRIX_D] &= MASK_LEFT_C;
+    }
+
     if(state.buttons[SNES_X]) {
-        puts("Button X is down");
+        // Fire left (right joystick:) pin 3 (A) to pin 2 (PA0)
+        full_matrix[PIN_MATRIX_A] &= ~MASK_RIGHT_A;
     }
+    else {
+        full_matrix[PIN_MATRIX_A] &= MASK_RIGHT_A;
+    }
+
     if(state.buttons[SNES_Y]) {
-        puts("Button Y is down");
+        // Fire right (right joystick:) pin 3 (A) to pin 1 (PA1)
+        full_matrix[PIN_MATRIX_B] &= ~MASK_RIGHT_A;
     }
+    else {
+        full_matrix[PIN_MATRIX_B] &= MASK_RIGHT_A;
+    }
+
     if(state.buttons[SNES_LEFT]) {
         puts("Button Left is down");
     }
@@ -109,7 +124,11 @@ void loop(PIO& pio, uint& sm) {
         puts("Select is down");
     }
     if(state.buttons[SNES_START]) {
-        puts("Start is down");
+        // Send Z - pin 5 (E) and pin 7 (G) on left controller to PA2
+        // TODO: what's the bit math here?
+    }
+    else {
+
     }
 
     // TODO: Read PS/2 keyboard as well (ideally interrupt-free, blocking-free) - detect keyup, keydown
