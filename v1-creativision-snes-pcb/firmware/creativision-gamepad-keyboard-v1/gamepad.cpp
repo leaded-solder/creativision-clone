@@ -141,7 +141,7 @@ void loop(PIO& pio, uint& sm) {
     unsigned short new_matrix_row = 0;
     for(unsigned short i = 0; i < 4; ++i) {
         // It's active low, so we're inverting it so the active row is active
-        new_matrix_row = ~(gpio_get_all() & INPUT_MATRIX_SELECTS);
+        new_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS;
     }
 
     if(last_matrix_row != new_matrix_row) {        
