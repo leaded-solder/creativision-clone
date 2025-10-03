@@ -72,43 +72,47 @@ unsigned short full_matrix[4];
 #define MASK_LEFT_G 0x40000
 #define MASK_LEFT_H 0x80000
 
+#define SET_MATRIX2(matrix, mask) full_matrix[matrix] &= (mask >> 4)
+#define UNSET_MATRIX2(matrix, mask) full_matrix[matrix] |= (mask >> 4)
+
 void loop(PIO& pio, uint& sm) {
     pad->update();
 
     SnesButtonState state = pad->get();
 
     // TODO: Set/reset appropriate matrix pins for controller
-    
+    printf("PA2 matrix = %04X\n", full_matrix[PIN_MATRIX_C]);
+
     if(state.buttons[SNES_B]) {
-        // Fire left (left joystick) pin 3 (Left C) to PA2
-        full_matrix[PIN_MATRIX_C] &= ~MASK_LEFT_C;
+        // Fire left (right joystick) PA2 to left-H
+        SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
     else {
-        full_matrix[PIN_MATRIX_C] &= MASK_LEFT_C;
+        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
 
     if(state.buttons[SNES_A]) {
-        // Fire Right (left joystick:) pin 3 (Left C) to PA3
-        full_matrix[PIN_MATRIX_D] &= ~MASK_LEFT_C;
+        // Fire Right (right joystick:) PA3 to left-H
+        SET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
     }
     else {
-        full_matrix[PIN_MATRIX_D] &= MASK_LEFT_C;
+        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
 
     if(state.buttons[SNES_X]) {
-        // Fire left (right joystick:) pin 3 (A) to pin 2 (PA0)
-        full_matrix[PIN_MATRIX_A] &= ~MASK_RIGHT_A;
+        // Fire right (left joystick:) pin 3 (F) to pin 2 (PA0)
+        SET_MATRIX2(PIN_MATRIX_A, MASK_RIGHT_F);
     }
     else {
-        full_matrix[PIN_MATRIX_A] &= MASK_RIGHT_A;
+        UNSET_MATRIX2(PIN_MATRIX_A, MASK_RIGHT_F);
     }
 
     if(state.buttons[SNES_Y]) {
-        // Fire right (right joystick:) pin 3 (A) to pin 1 (PA1)
-        full_matrix[PIN_MATRIX_B] &= ~MASK_RIGHT_A;
+        // Fire left (left joystick:) pin 3 (F) to pin 1 (PA1)
+        SET_MATRIX2(PIN_MATRIX_B, MASK_RIGHT_F);
     }
     else {
-        full_matrix[PIN_MATRIX_B] &= MASK_RIGHT_A;
+        UNSET_MATRIX2(PIN_MATRIX_B, MASK_RIGHT_F);
     }
 
     if(state.buttons[SNES_LEFT]) {
