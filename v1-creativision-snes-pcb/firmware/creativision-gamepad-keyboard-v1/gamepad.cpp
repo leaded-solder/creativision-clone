@@ -92,12 +92,12 @@ void loop(PIO& pio, uint& sm) {
 
     if(state.buttons[SNES_B]) {
         // Fire left (right joystick) PA2 to left-H
-        SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
-        //full_matrix[PIN_MATRIX_C] = 0xfffe;
+        //SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
+        full_matrix[PIN_MATRIX_C] = 0x7fff;
     }
     else {
-        //full_matrix[PIN_MATRIX_C] = 0xffff;
-        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
+        full_matrix[PIN_MATRIX_C] = 0xffff;
+        //UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
 
     if(state.buttons[SNES_A]) {
@@ -154,6 +154,7 @@ void loop(PIO& pio, uint& sm) {
     else if(new_matrix_row & 0x02) { new_matrix_row = 1; }
     else if(new_matrix_row & 0x04) { new_matrix_row = 2; }    
     else if(new_matrix_row & 0x08) { new_matrix_row = 3; } // TURBO HACK
+    else { trouble(); }
 
     if(last_matrix_row != new_matrix_row) {        
         printf("Requested output has changed, now %i\n", new_matrix_row);
