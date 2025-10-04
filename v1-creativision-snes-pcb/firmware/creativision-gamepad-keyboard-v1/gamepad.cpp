@@ -136,13 +136,11 @@ void loop(PIO& pio, uint& sm) {
     }
 
     // TODO: Read PS/2 keyboard as well (ideally interrupt-free, blocking-free) - detect keyup, keydown
-    
+
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
     unsigned short new_matrix_row = 0;
-    for(unsigned short i = 0; i < 4; ++i) {
-        // It's active low, so we're inverting it so the active row is active
-        new_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS;
-    }
+    // It's active low, so we're inverting it so the active row is active
+    new_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS; // HACK
 
     if(last_matrix_row != new_matrix_row) {        
         printf("Requested output has changed, now %i\n", new_matrix_row);
@@ -199,7 +197,7 @@ int main()
         full_matrix[i] = 0xffff;
     }
 
-    last_matrix_row = 0xff; // force it to re-initialize on first pull
+    last_matrix_row = 0x0; // force it to re-initialize on first pull
 
     // load PS/2 parsing PIO
     // https://raspico.blogspot.com/2022/05/using-pio-to-interface-ps2-keyboard.html
