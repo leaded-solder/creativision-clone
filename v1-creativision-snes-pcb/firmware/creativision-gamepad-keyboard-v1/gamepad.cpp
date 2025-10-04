@@ -149,12 +149,16 @@ void loop(PIO& pio, uint& sm) {
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
     unsigned short new_matrix_row = 0;
     // It's active low, so we're inverting it so the active row is active
+    gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
+
     new_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS; // HACK - probably buggy too
     if(new_matrix_row & 0x01) { new_matrix_row = 0; }
     else if(new_matrix_row & 0x02) { new_matrix_row = 1; }
     else if(new_matrix_row & 0x04) { new_matrix_row = 2; }    
     else if(new_matrix_row & 0x08) { new_matrix_row = 3; } // TURBO HACK
-    else { trouble(); }
+    else {
+        gpio_set_dir_in_masked(OUTPUT_MATRIX_MASK);
+    }
 
     if(last_matrix_row != new_matrix_row) {        
         printf("Requested output has changed, now %i\n", new_matrix_row);
