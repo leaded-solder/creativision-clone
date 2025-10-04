@@ -72,8 +72,10 @@ unsigned short full_matrix[4];
 #define MASK_LEFT_G 0x40000
 #define MASK_LEFT_H 0x80000
 
-#define SET_MATRIX2(matrix, mask) full_matrix[matrix] &= (mask >> 4)
-#define UNSET_MATRIX2(matrix, mask) full_matrix[matrix] |= (mask >> 4)
+// also buggy
+#define SET_MATRIX2(row, mask) full_matrix[row] &= ~(mask) >> 4
+// buggy
+#define UNSET_MATRIX2(row, mask) full_matrix[row] |= (mask >> 4)
 
 void loop(PIO& pio, uint& sm) {
     pad->update();
@@ -81,14 +83,16 @@ void loop(PIO& pio, uint& sm) {
     SnesButtonState state = pad->get();
 
     // TODO: Set/reset appropriate matrix pins for controller
-    printf("PA2 matrix = %04X\n", full_matrix[PIN_MATRIX_C]);
+    //printf("PA2 matrix = %04X\n", full_matrix[PIN_MATRIX_C]);
 
     if(state.buttons[SNES_B]) {
         // Fire left (right joystick) PA2 to left-H
-        SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
+        //SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
+        full_matrix[PIN_MATRIX_C] = 0xfffe;
     }
     else {
-        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
+        full_matrix[PIN_MATRIX_C] = 0xffff;
+        //UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
 
     if(state.buttons[SNES_A]) {
@@ -181,11 +185,13 @@ int main()
 
     // TODO: Activate outputs
     // TODO: Set outputs high or low depending on ptr to keyboard state/SNES state
-    // TODO: Test SNES controller
-
+    
     stdio_init_all();
 
+    printf("Hello, world\n");
+
     // Set directions
+    gpio_init_mask(INPUT_MATRIX_SELECTS | OUTPUT_MATRIX_MASK);
     gpio_set_dir_in_masked(INPUT_MATRIX_SELECTS);
     gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
 
