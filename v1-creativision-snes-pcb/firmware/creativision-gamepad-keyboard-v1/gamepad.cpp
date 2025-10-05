@@ -7,10 +7,10 @@
 
 SnesPad *pad = NULL;
 
-#define PIN_MATRIX_A 0 // "pin 2," right joystick   (~PA0)
-#define PIN_MATRIX_B 1 // "pin 1," right joystick   (~PA1)
-#define PIN_MATRIX_C 2 // "pin 10," left joystick   (~PA2)
-#define PIN_MATRIX_D 3 // "pin 9," left joystick    (~PA3)
+#define PIN_MATRIX_A 3 // "pin 2," right joystick   (~PA0)
+#define PIN_MATRIX_B 2 // "pin 1," right joystick   (~PA1)
+#define PIN_MATRIX_C 1 // "pin 10," left joystick   (~PA2)
+#define PIN_MATRIX_D 0 // "pin 9," left joystick    (~PA3)
 // the select lines are mutually exclusive
 
 #define PIN_PS2_DATA 28
@@ -61,6 +61,7 @@ void trouble() {
     gpio_put(PIN_LED, 1);
 }
 
+// Button masks, relative to the "button mask" portion of GPIO (shifted)
 #define MASK_RIGHT_A 0x0001
 #define MASK_RIGHT_B 0x0002
 #define MASK_RIGHT_C 0x0004
@@ -80,9 +81,9 @@ void trouble() {
 #define MASK_LEFT_H 0x8000
 
 // also buggy
-#define SET_MATRIX2(row, mask) full_matrix[row] &= ~(mask) >> 4
+#define SET_MATRIX2(row, mask) full_matrix[row] &= ~(mask)
 // buggy
-#define UNSET_MATRIX2(row, mask) full_matrix[row] |= (mask >> 4)
+#define UNSET_MATRIX2(row, mask) full_matrix[row] |= (mask)
 
 void loop(PIO& pio, uint& sm) {
     pad->update();
@@ -93,18 +94,11 @@ void loop(PIO& pio, uint& sm) {
     //printf("PA2 matrix = %04X\n", full_matrix[PIN_MATRIX_C]);
 
     if(state.buttons[SNES_B]) {
-        //gpio_put(PIN_LED, 1);
-        // should produce 7fff? but it's not actually driving it
-
         // Fire left (right joystick) PA3 to left-H
-        //SET_MATRIX2(PIN_MATRIX_A, MASK_RIGHT_H);
-        full_matrix[0] = 0x7fff; // are my matrix indices backward?
+        SET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
     }
     else {
-        //gpio_put(PIN_LED, 0);
-        //full_matrix[PIN_MATRIX_D] = 0xffff;
-        //UNSET_MATRIX2(PIN_MATRIX_A, MASK_RIGHT_H);
-        full_matrix[0] = 0xffff;
+        UNSET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
     }
 
     /*
