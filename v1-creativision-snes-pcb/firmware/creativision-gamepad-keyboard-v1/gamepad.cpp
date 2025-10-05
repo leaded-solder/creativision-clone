@@ -171,12 +171,12 @@ void loop(PIO& pio, uint& sm) {
         printf("Requested output has changed, now %i\n", new_matrix_row);
         last_matrix_row = new_matrix_row;
         gpio_put(PIN_LED, 1);
+        gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4); // HACK
     }
     else {
         gpio_put(PIN_LED, 0);
     }
     
-    gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4); // HACK
     
     // Change outputs (if needed, this will also pick up key changes during a row)
 
