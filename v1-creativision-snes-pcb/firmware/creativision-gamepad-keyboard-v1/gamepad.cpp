@@ -16,6 +16,8 @@ SnesPad *pad = NULL;
 #define PIN_PS2_DATA 28
 #define PIN_PS2_CLOCK 27
 
+#define PIN_LED 25
+
 // Pins GPIO0..GPIO3 inclusive (active low, 0 = selected)
 #define INPUT_MATRIX_SELECTS 0x0000f
 // Pins GPIO4..GPIO19 inclusive (active low, 0 = pressed)
@@ -56,26 +58,26 @@ unsigned short full_matrix[4];
 
 void trouble() {
     // WE HAVE TROUBLE
-    gpio_put(26, 1);
+    gpio_put(PIN_LED, 1);
 }
 
-#define MASK_RIGHT_A 0x00010
-#define MASK_RIGHT_B 0x00020
-#define MASK_RIGHT_C 0x00040
-#define MASK_RIGHT_D 0x00080
-#define MASK_RIGHT_E 0x00100
-#define MASK_RIGHT_F 0x00200
-#define MASK_RIGHT_G 0x00400
-#define MASK_RIGHT_H 0x00800
+#define MASK_RIGHT_A 0x0001
+#define MASK_RIGHT_B 0x0002
+#define MASK_RIGHT_C 0x0004
+#define MASK_RIGHT_D 0x0008
+#define MASK_RIGHT_E 0x0010
+#define MASK_RIGHT_F 0x0020
+#define MASK_RIGHT_G 0x0040
+#define MASK_RIGHT_H 0x0080
 
-#define MASK_LEFT_A 0x01000
-#define MASK_LEFT_B 0x02000
-#define MASK_LEFT_C 0x04000
-#define MASK_LEFT_D 0x08000
-#define MASK_LEFT_E 0x10000
-#define MASK_LEFT_F 0x20000
-#define MASK_LEFT_G 0x40000
-#define MASK_LEFT_H 0x80000
+#define MASK_LEFT_A 0x0100
+#define MASK_LEFT_B 0x0200
+#define MASK_LEFT_C 0x0400
+#define MASK_LEFT_D 0x0800
+#define MASK_LEFT_E 0x1000
+#define MASK_LEFT_F 0x2000
+#define MASK_LEFT_G 0x4000
+#define MASK_LEFT_H 0x8000
 
 // also buggy
 #define SET_MATRIX2(row, mask) full_matrix[row] &= ~(mask) >> 4
@@ -91,21 +93,28 @@ void loop(PIO& pio, uint& sm) {
     //printf("PA2 matrix = %04X\n", full_matrix[PIN_MATRIX_C]);
 
     if(state.buttons[SNES_B]) {
+        //gpio_put(PIN_LED, 1);
+        // should produce 7fff? but it's not actually driving it
+
         // Fire left (right joystick) PA3 to left-H
-        SET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
-        //full_matrix[PIN_MATRIX_D] = 0x7fff;
+        //SET_MATRIX2(PIN_MATRIX_A, MASK_RIGHT_H);
+        full_matrix[0] = 0x7fff; // are my matrix indices backward?
     }
     else {
-        full_matrix[PIN_MATRIX_D] = 0xffff;
-        UNSET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
+        //gpio_put(PIN_LED, 0);
+        //full_matrix[PIN_MATRIX_D] = 0xffff;
+        //UNSET_MATRIX2(PIN_MATRIX_A, MASK_RIGHT_H);
+        full_matrix[0] = 0xffff;
     }
+
+    /*
 
     if(state.buttons[SNES_A]) {
         // Fire Right (right joystick:) PA3 to left-H
         SET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
     }
     else {
-        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
+        UNSET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
     }
 
     if(state.buttons[SNES_X]) {
@@ -144,13 +153,15 @@ void loop(PIO& pio, uint& sm) {
 
     }
 
+    */
+
     // TODO: Read PS/2 keyboard as well (ideally interrupt-free, blocking-free) - detect keyup, keydown
     // FIXME: Sometimes the thing is asking for nothing at all (PA0..PA3 all high)
 
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
     unsigned short new_matrix_row = 0;
     // It's active low, so we're inverting it so the active row is active
-    gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
+    //gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
 
     new_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS; // HACK - probably buggy too
     if(new_matrix_row & 0x01) { new_matrix_row = 0; }
@@ -158,19 +169,23 @@ void loop(PIO& pio, uint& sm) {
     else if(new_matrix_row & 0x04) { new_matrix_row = 2; }    
     else if(new_matrix_row & 0x08) { new_matrix_row = 3; } // TURBO HACK
     else {
-        gpio_set_dir_in_masked(OUTPUT_MATRIX_MASK);
+        //gpio_set_dir_in_masked(OUTPUT_MATRIX_MASK);
     }
 
     if(last_matrix_row != new_matrix_row) {        
         printf("Requested output has changed, now %i\n", new_matrix_row);
         last_matrix_row = new_matrix_row;
+        gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4); // HACK
+        gpio_put(PIN_LED, 1);
+    }
+    else {
+        gpio_put(PIN_LED, 0);
     }
 
     // Change outputs (if needed, this will also pick up key changes during a row)
 
     // TODO: Endianness? Do we need to change the order of the matrix to LEFTRIGHT instead of RIGHTLEFT bytes?
     // remember that this is also active low
-    gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4);
 
     // probably the way to do this is some kind of table, so that individual characters
     // will turn on parts of the gpio flags (basically the same table that was made for the PDF)
@@ -207,18 +222,24 @@ int main()
 
     // Set directions
     gpio_init_mask(INPUT_MATRIX_SELECTS | OUTPUT_MATRIX_MASK);
-    gpio_init(26);
-    gpio_set_dir_in_masked(INPUT_MATRIX_SELECTS);
-    gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
 
-    gpio_set_dir(26, GPIO_OUT); // trouble pin
+    // debug led
+    gpio_init(PIN_LED);
+    gpio_set_dir(PIN_LED, GPIO_OUT);
+    
+    gpio_set_dir_in_masked(INPUT_MATRIX_SELECTS);
+    gpio_pull_up(PIN_MATRIX_A);
+    gpio_pull_up(PIN_MATRIX_B);
+    gpio_pull_up(PIN_MATRIX_C);
+    gpio_pull_up(PIN_MATRIX_D);
+    gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
 
     // Pull everything high. Is this better done with pullups?
     gpio_put_masked(OUTPUT_MATRIX_MASK, OUTPUT_MATRIX_MASK);
 
     // Clear matrix state
     for(unsigned char i = 0; i < 4; ++i) {
-        full_matrix[i] = 0xffff;
+        full_matrix[i] = 0xffff; // it's active low.
     }
 
     last_matrix_row = 0x0; // force it to re-initialize on first pull
