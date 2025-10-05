@@ -101,16 +101,16 @@ void loop(PIO& pio, uint& sm) {
         UNSET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
     }
 
-    /*
-
-    if(state.buttons[SNES_A]) {
+    /*if(state.buttons[SNES_A]) {
         // Fire Right (right joystick:) PA3 to left-H
-        SET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
+        SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
     else {
-        UNSET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
+        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
+        */
 
+    /*
     if(state.buttons[SNES_X]) {
         // Fire right (left joystick:) pin 3 (F) to pin 2 (PA0)
         SET_MATRIX2(PIN_MATRIX_A, MASK_RIGHT_F);
