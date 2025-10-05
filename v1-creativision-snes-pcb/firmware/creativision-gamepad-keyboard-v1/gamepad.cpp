@@ -155,6 +155,7 @@ void loop(PIO& pio, uint& sm) {
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
     unsigned short new_matrix_row = 0;
     // It's active low, so we're inverting it so the active row is active
+    
     //gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
 
     new_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS; // HACK - probably buggy too
@@ -169,13 +170,14 @@ void loop(PIO& pio, uint& sm) {
     if(last_matrix_row != new_matrix_row) {        
         printf("Requested output has changed, now %i\n", new_matrix_row);
         last_matrix_row = new_matrix_row;
-        gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4); // HACK
         gpio_put(PIN_LED, 1);
     }
     else {
         gpio_put(PIN_LED, 0);
     }
-
+    
+    gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4); // HACK
+    
     // Change outputs (if needed, this will also pick up key changes during a row)
 
     // TODO: Endianness? Do we need to change the order of the matrix to LEFTRIGHT instead of RIGHTLEFT bytes?
