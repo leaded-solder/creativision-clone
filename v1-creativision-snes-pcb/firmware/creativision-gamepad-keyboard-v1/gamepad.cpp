@@ -140,43 +140,30 @@ void loop(PIO& pio, uint& sm) {
     }
     if(state.buttons[SNES_SELECT]) {
         puts("Select is down");
-    }
+    }*/
+
     if(state.buttons[SNES_START]) {
         // Send Z - pin 5 (E) and pin 7 (G) on left controller to PA2
-        // TODO: what's the bit math here?
+        SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_A ^ MASK_LEFT_C);
     }
     else {
-
+        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_A ^ MASK_LEFT_C);
     }
-
-    */
 
     // TODO: Read PS/2 keyboard as well (ideally interrupt-free, blocking-free) - detect keyup, keydown
     // FIXME: Sometimes the thing is asking for nothing at all (PA0..PA3 all high)
 
     // Detect PA0..PA3 inputs changing and then offer up a new matrix
     unsigned short new_matrix_row = 0xff;
-    // It's active low, so we're inverting it so the active row is active
     
-    //gpio_set_dir_out_masked(OUTPUT_MATRIX_MASK);
-
-    // PRETTY SURE this is buggy.
-
-    //new_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS; // HACK - probably buggy too
-    /*if(new_matrix_row & 0x01) { new_matrix_row = 0; }
-    else if(new_matrix_row & 0x02) { new_matrix_row = 1; }
-    else if(new_matrix_row & 0x04) { new_matrix_row = 2; }    
-    else if(new_matrix_row & 0x08) { new_matrix_row = 3; } // TURBO HACK
-    else {
-        // the right thing to do here is to shut up but it's buggy
-        //gpio_set_dir_in_masked(OUTPUT_MATRIX_MASK);
-    }*/
+    // It's active low, so we're inverting it so the active row is active
+    unsigned short raw_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS;
 
     // Desperate hack here to shore up the matrix cycling
-    if(!gpio_get(PIN_MATRIX_A)) { new_matrix_row = PIN_MATRIX_A; }
-    else if(!gpio_get(PIN_MATRIX_B)) { new_matrix_row = PIN_MATRIX_B; }
-    else if(!gpio_get(PIN_MATRIX_C)) { new_matrix_row = PIN_MATRIX_C; }
-    else if(!gpio_get(PIN_MATRIX_D)) { new_matrix_row = PIN_MATRIX_D; }
+    if(raw_matrix_row & 0x01) { new_matrix_row = PIN_MATRIX_A; }
+    else if(raw_matrix_row & 0x02) { new_matrix_row = PIN_MATRIX_B; }
+    else if(raw_matrix_row & 0x04) { new_matrix_row = PIN_MATRIX_C; }
+    else if(raw_matrix_row & 0x08) { new_matrix_row = PIN_MATRIX_D; }
 
     if(new_matrix_row != 0xff && last_matrix_row != new_matrix_row) {        
         last_matrix_row = new_matrix_row;
@@ -184,14 +171,6 @@ void loop(PIO& pio, uint& sm) {
         // Change outputs (if needed, this will also pick up key changes during a row)
         gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4); // HACK
     }
-
-    if(new_matrix_row == 3) {
-        gpio_put(PIN_LED, 1); // blink this only if matrix ever cycles, we're trying to figure this out now
-    }
-    else {
-        gpio_put(PIN_LED, 0); // blink this only if matrix ever cycles, we're trying to figure this out now
-    }
-    
 
     // TODO: Endianness? Do we need to change the order of the matrix to LEFTRIGHT instead of RIGHTLEFT bytes? i think we have mixed up our left and right controller connectors
     // remember that this is also active low
