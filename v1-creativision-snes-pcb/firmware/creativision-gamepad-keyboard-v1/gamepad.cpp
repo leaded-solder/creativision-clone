@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
+#include "hardware/gpio.h"
 
 #include "snespad.h"
 
@@ -164,30 +165,20 @@ void loop(PIO& pio, uint& sm) {
     // TODO: Read PS/2 keyboard as well (ideally interrupt-free, blocking-free) - detect keyup, keydown
     // FIXME: Sometimes the thing is asking for nothing at all (PA0..PA3 all high)
 
-    // Detect PA0..PA3 inputs changing and then offer up a new matrix
-    unsigned short new_matrix_row = 0xff;
-    
-    // It's active low, so we're inverting it so the active row is active
-    unsigned short raw_matrix_row = ~(gpio_get_all()) & INPUT_MATRIX_SELECTS;
-
-    // Desperate hack here to shore up the matrix cycling
-    if(raw_matrix_row & 0x01) { new_matrix_row = PIN_MATRIX_A; }
-    else if(raw_matrix_row & 0x02) { new_matrix_row = PIN_MATRIX_B; }
-    else if(raw_matrix_row & 0x04) { new_matrix_row = PIN_MATRIX_C; }
-    else if(raw_matrix_row & 0x08) { new_matrix_row = PIN_MATRIX_D; }
-
-    if(new_matrix_row != 0xff && last_matrix_row != new_matrix_row) {        
-        last_matrix_row = new_matrix_row;
-
-        // Change outputs (if needed, this will also pick up key changes during a row)
-        gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4); // HACK
-    }
-
     // TODO: Endianness? Do we need to change the order of the matrix to LEFTRIGHT instead of RIGHTLEFT bytes? i think we have mixed up our left and right controller connectors
     // remember that this is also active low
 
     // probably the way to do this is some kind of table, so that individual characters
     // will turn on parts of the gpio flags (basically the same table that was made for the PDF)
+}
+
+void matrix_changed(uint raw_row, uint32_t events) {
+    if(last_matrix_row != raw_row) {        
+        last_matrix_row = (unsigned short)raw_row;
+
+        // Change outputs (if needed, this will also pick up key changes during a row)
+        gpio_put_masked(OUTPUT_MATRIX_MASK, full_matrix[last_matrix_row] << 4); // HACK
+    }
 }
 
 int main()
@@ -241,7 +232,13 @@ int main()
         full_matrix[i] = 0xffff; // it's active low.
     }
 
-    last_matrix_row = 0x0; // force it to re-initialize on first pull
+    last_matrix_row = 0x00; // force it to re-initialize on first pull
+
+    // Set up interrupts for faster matrix change handling (it's only 60hz, why am I having trouble?)
+    gpio_set_irq_enabled_with_callback(PIN_MATRIX_A, GPIO_IRQ_EDGE_FALL, true, &matrix_changed);
+    gpio_set_irq_enabled(PIN_MATRIX_B, GPIO_IRQ_EDGE_FALL, true);
+    gpio_set_irq_enabled(PIN_MATRIX_C, GPIO_IRQ_EDGE_FALL, true);
+    gpio_set_irq_enabled(PIN_MATRIX_D, GPIO_IRQ_EDGE_FALL, true);
 
     // load PS/2 parsing PIO
     // https://raspico.blogspot.com/2022/05/using-pio-to-interface-ps2-keyboard.html
