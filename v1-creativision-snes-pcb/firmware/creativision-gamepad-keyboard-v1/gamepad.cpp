@@ -7,10 +7,10 @@
 
 SnesPad *pad = NULL;
 
-#define PIN_MATRIX_A 3 // "pin 2," right joystick   (~PA0)
-#define PIN_MATRIX_B 2 // "pin 1," right joystick   (~PA1)
-#define PIN_MATRIX_C 1 // "pin 10," left joystick   (~PA2)
-#define PIN_MATRIX_D 0 // "pin 9," left joystick    (~PA3)
+#define PIN_MATRIX_A 0 // "pin 2," right joystick   (~PA0)
+#define PIN_MATRIX_B 1 // "pin 1," right joystick   (~PA1)
+#define PIN_MATRIX_C 2 // "pin 10," left joystick   (~PA2)
+#define PIN_MATRIX_D 3 // "pin 9," left joystick    (~PA3)
 // the select lines are mutually exclusive
 
 #define PIN_PS2_DATA 28
@@ -50,6 +50,8 @@ unsigned short last_matrix_row; // current matrix row being read
 // then we can just drive the mask
 
 // TODO: it probably makes sense to make the keycode a u8 (for row index) and then u16 (for bitmask)
+
+// TODO: something very funky going on with PA0 specifically
 
 /**
  * The entire matrix for all rows (bitmask for RIGHT-LEFT, see above)
@@ -94,21 +96,20 @@ void loop(PIO& pio, uint& sm) {
     //printf("PA2 matrix = %04X\n", full_matrix[PIN_MATRIX_C]);
 
     if(state.buttons[SNES_B]) {
-        // Fire left (right joystick) PA3 to left-H
-        SET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
-    }
-    else {
-        UNSET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
-    }
-
-    /*if(state.buttons[SNES_A]) {
-        // Fire Right (right joystick:) PA3 to left-H
+        // Fire left (right joystick) PA2 to left-H
         SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
     else {
         UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_H);
     }
-        */
+
+    if(state.buttons[SNES_A]) {
+        // Fire Right (right joystick:) PA3 to left-H
+        SET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
+    }
+    else {
+        UNSET_MATRIX2(PIN_MATRIX_D, MASK_LEFT_H);
+    }
 
     /*
     if(state.buttons[SNES_X]) {
