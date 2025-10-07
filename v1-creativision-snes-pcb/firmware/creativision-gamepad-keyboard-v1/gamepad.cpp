@@ -128,11 +128,22 @@ void loop(PIO& pio, uint& sm) {
         UNSET_MATRIX2(PIN_MATRIX_B, MASK_RIGHT_F);
     }
 
-    /*
-    if(state.buttons[SNES_LEFT]) {
-        puts("Button Left is down");
+    
+    if(state.buttons[SNES_RIGHT]) {
+        SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_A);
     }
-    if(state.buttons[SNES_L]) {
+    else {
+        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_A);
+    }
+
+    if(state.buttons[SNES_LEFT]) {
+        SET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_F);
+    }
+    else {
+        UNSET_MATRIX2(PIN_MATRIX_C, MASK_LEFT_F);
+    }
+    
+    /*if(state.buttons[SNES_L]) {
         puts("Left Shoulder is down");
     }
     if(state.buttons[SNES_R]) {
